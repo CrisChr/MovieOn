@@ -1,30 +1,22 @@
-import React from 'react';
-import {Platform, StyleSheet, Text, View, FlatList} from 'react-native';
+import {createStackNavigator, createAppContainer} from 'react-navigation'
 
-import Items from './src/Items'
-import movies from './nowplaying.json'
+import MovieList from './src/MovieList'
+import MovieDetail from './src/MovieDetail'
 
-class App extends React.Component {
-  render() {
-    return (
-      <View>
-        <FlatList 
-          style={styles.row}
-          numColumns={3}
-          data={movies.subjects} 
-          keyExtractor={item => item.id}
-          renderItem={({item}) => 
-            <Items title={item.title} img={item.images.medium} stars={item.rating.stars} average={item.rating.average}/>}
-        />
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  row: {
-    paddingHorizontal: 15
+const Navigator = createStackNavigator({
+  MovieList: {
+    screen: MovieList,
+    navigationOptions: ({navigation}) => ({
+      title: '正在上映',
+    })
   },
+  MovieDetail: {
+    screen: MovieDetail,
+    navigationOptions: ({navigation}) => ({
+      title: navigation.state.params.title
+    })
+  }
 });
+const App = createAppContainer(Navigator)
 
 export default App

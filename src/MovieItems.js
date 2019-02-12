@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Image, Text, Dimensions } from 'react-native'
+import { StyleSheet, View, Image, Text, Dimensions, TouchableOpacity } from 'react-native'
 
 const {width, height} = Dimensions.get('window') // 获取当前屏幕的宽、高
 
@@ -56,14 +56,13 @@ class Items extends React.Component {
 
 
   render() {
-    let {title, img, stars, average} = this.props
+    let {title, img, stars, average, onPress} = this.props
     return (
-      <View style={styles.root}>
+      <TouchableOpacity style={styles.root} onPress={onPress}>
         <Image style={styles.img} source={{uri: img}}/>
         <Text style={styles.title} numberOfLines={1}>{title}</Text>
         {this.renderStars(stars, average)}
-        
-      </View>
+      </TouchableOpacity>
     );
   }
 }
