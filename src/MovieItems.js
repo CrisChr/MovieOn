@@ -30,19 +30,19 @@ class Items extends React.Component {
     let i, j
     for(i=0; i<full; i++){
       results.push(
-        <Image key={i} style={styles.star} source={require('./imgs/star-full.png')}/>
+        <Image key={i+'i'} style={styles.star} source={require('./imgs/star-full.png')}/>
       )
     }
 
     if(half) {
       results.push(
-        <Image key={i} style={styles.star} source={require('./imgs/star-half.png')}/>
+        <Image key={i+6} style={styles.star} source={require('./imgs/star-half.png')}/>
       )
     }
 
     for(j=0; j<empty; j++){
       results.push(
-        <Image key={j} style={styles.star} source={require('./imgs/star-empty.png')}/>
+        <Image key={j+'j'} style={styles.star} source={require('./imgs/star-empty.png')}/>
       )
     }
 
