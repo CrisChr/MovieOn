@@ -59,6 +59,11 @@ class MovieList extends React.Component {
           movies: this.state.movies.concat(moreData.subjects)
         })
       }
+    }else{
+      this.setState({
+        refresh: false
+      })
+      this.refresh = false
     }
   }
 
@@ -82,7 +87,7 @@ class MovieList extends React.Component {
           onRefresh={this.pullDownFetch}  //下拉执行刷新函数
           refreshing={this.state.refresh} //是否刷新
           onEndReached={this.pullUpFetch} //上拉加载
-          onEndReachedThreshold={0}
+          onEndReachedThreshold={0.1}
           data={this.state.movies} 
           keyExtractor={item => item.id}
           renderItem={({item}) => 

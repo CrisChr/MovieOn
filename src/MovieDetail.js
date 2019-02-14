@@ -2,9 +2,6 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
 class MovieDetail extends React.Component {
-  // static navigationOptions = ({navigation}) => {
-  //   title: 'A'
-  // }
   render() {
     const {state} = this.props.navigation
     return (

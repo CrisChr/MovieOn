@@ -11,21 +11,13 @@ const imgHeight = imgWidth / 0.697
 
 class Items extends React.Component {
   renderStars(stars, average) {
-    // if(stars === '00'){
-    //   return
-    // }
+
     const total = 5
     let full, half, empty
-    full = stars !== '00' ? parseInt(stars[0]) - 1 : 0  // 如果评分是‘00’，则无评分
-    if(stars[1] === '5'){
-      full++
-      half = 0
-      empty = total - full
-    }else{
-      half = stars !== '00' ? 1 : 0
-      empty = total - full - half
-    }
-
+    full = stars !== '00' ? parseInt(stars[0]) : 0  // 如果评分是‘00’，则无评分
+    half = stars[1] === '5' ? 1 : 0
+    empty = total - full - half
+    
     const results = []
     let i, j
     for(i=0; i<full; i++){
@@ -46,10 +38,13 @@ class Items extends React.Component {
       )
     }
 
+    /** 若评分为0，则显示暂无评分 
+     *  若评分为整型，则先转换成浮点型，然后去一位小数：7 -> 7.0
+    */
     return (
       <View style={styles.starsWrapper}>
-        {results}
-        <Text style={{marginLeft: 10}}>{average}</Text>
+        {average !== 0 ? results : <Text style={{marginLeft: 10}}>暂无评分</Text>}
+        {average !== 0 ? <Text style={{marginLeft: 10}}>{parseFloat(average).toFixed(1)}</Text> : <Text style={{marginLeft: 10}}></Text>}
       </View>
     )
   }
