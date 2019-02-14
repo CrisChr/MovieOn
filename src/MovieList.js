@@ -52,18 +52,13 @@ class MovieList extends React.Component {
 
   pullUpFetch = async() => {
     this.start += this.count + 1
-    if(this.start !== this.state.total) {
+    if(this.start < this.state.total) {
       const moreData = await this.fetchData(this.start, this.count)
       if(moreData){
         this.setState({
           movies: this.state.movies.concat(moreData.subjects)
         })
       }
-    }else{
-      this.setState({
-        refresh: false
-      })
-      this.refresh = false
     }
   }
 
@@ -97,7 +92,7 @@ class MovieList extends React.Component {
               average={item.rating.average}
               onPress={() => navigate('MovieDetail', {title: item.title}) }/>
             }
-          /> : <ActivityIndicator size='large' style={{marginTop: 100}}/>
+          /> : <ActivityIndicator size='large' style={{marginTop: 300}}/>
         } 
       </View>
     );
