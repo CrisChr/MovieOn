@@ -90,7 +90,7 @@ class MovieList extends React.Component {
               img={item.images.medium} 
               stars={item.rating.stars} 
               average={item.rating.average}
-              onPress={() => navigate('MovieDetail', {title: item.title}) }/>
+              onPress={() => navigate('MovieDetail', {id: item.id}) }/>
             }
           /> : <ActivityIndicator size='large' style={{marginTop: 300}}/>
         } 
