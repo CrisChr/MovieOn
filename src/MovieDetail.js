@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, Text, View, ActivityIndicator, Image} from 'react-native';
-//import storage from '../storage';
+import {StyleSheet, Text, View, ActivityIndicator, Image, FlatList} from 'react-native';
+
 class MovieDetail extends React.Component {
   constructor(props){
     super(props)
@@ -20,8 +20,8 @@ class MovieDetail extends React.Component {
         }
       }
     } = this.props.navigation
-    console.log('id: ', id)
-    const result = storage.load({
+    
+    storage.load({
       key: 'movie',
       id: id,
       autoSync: true,
@@ -30,7 +30,10 @@ class MovieDetail extends React.Component {
         movieId: id
       }
     }).then((ret) => {
-      return ret;
+      this.setState({
+        data: ret,
+        ready: true
+      })
     }).catch(err => {
       console.warn(err.message)
       switch (err.name) {
@@ -42,7 +45,6 @@ class MovieDetail extends React.Component {
       }
     })
 
-    console.log('result: ', result)
     const that = this
     storage.sync = {
       async movie(params) {
@@ -51,45 +53,80 @@ class MovieDetail extends React.Component {
             movieId
           }
         } = params
-        console.log('movie id: ', movieId)
-        console.log('api: ', `${that.api}/${movieId}`)
-        const rawResponse = await fetch(`${this.api}/${movieId}`)
+        const rawResponse = await fetch(`${that.api}/${movieId}`)
         const textResponse = await rawResponse.text()
         const jsonResponse = JSON.parse(textResponse)
         console.log('json: ', jsonResponse)
         if (jsonResponse) {
-          that.setState({
-            data: jsonResponse,
-            ready: true
-          })
           storage.save({
             key: 'movie',
             id: movieId,
             data: jsonResponse
           })
+          return jsonResponse
         }
       }
     }
   }
 
   render() {
-    const {data: {title, summary, images}, ready} = this.state
+    const {data: {rating, genres, directors, casts, countries, summary, images}, ready} = this.state
     return (
       <View>
         {
           ready ? 
           <View>
-            <Image style={{width: 135, height: 188.5}} source={{uri: images.large}}/>
-            <Text>{title}</Text>
-            <Text>{summary}</Text>
+              <View style={styles.content}>
+                <Image style={styles.imgsSize} source={{uri: images.large}}/>
+                <Text style={styles.title}>评分：{rating.average === 0 ? '暂无评分' : rating.average}</Text>
+                <Text style={styles.title}>类型：{
+                    genres.map((v) => v + ' ')
+                  }
+                </Text>
+                <Text style={styles.title}>导演：{
+                    directors.map((v) => v.name + ' ')
+                  }
+                </Text>
+                <Text style={styles.title} numberOfLines={2} ellipsizeMode='tail'>主演：{
+                    casts.map((v, i) => <Text key={i}>{v.name + ' '}</Text>)
+                  }
+                </Text>
+                <Text style={styles.title}>上映国家（地区）：{
+                    countries.map((v) => v + ' ')
+                  }
+                </Text>
+                <Text style={styles.title}>故事梗概：{summary}</Text>
+              </View>
+              
           </View>
+          
            :
-          <ActivityIndicator size='large' style={{marginTop: 100}}/>
+          <ActivityIndicator size='large' style={styles.loading}/>
         }
         
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  content: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    
+  },
+  title: {
+    fontWeight: 'bold',
+    
+    lineHeight: 30
+  },
+  imgsSize: {
+    width: 135,
+    height: 188.5,
+  },
+  loading: {
+    marginTop: 100
+  }
+})
 
 export default MovieDetail
