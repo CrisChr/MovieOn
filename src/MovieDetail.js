@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, ActivityIndicator, Image, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, ActivityIndicator, Image, ScrollView, ImageBackground } from 'react-native';
 
 class MovieDetail extends React.Component {
   constructor(props){
@@ -76,34 +76,33 @@ class MovieDetail extends React.Component {
         {
           ready ? 
           <View>
-              <View style={styles.content}>
-                <Image style={styles.img} source={{uri: images.large}}/>
-                <Text style={styles.title}>评分：{rating.average === 0 ? '暂无评分' : rating.average}</Text>
-                <Text style={styles.title}>类型：{
-                    genres.map((v) => v + ' ')
-                  }
-                </Text>
-                <Text style={styles.title}>导演：{
-                    directors.map((v) => v.name + ' ')
-                  }
-                </Text>
-                <Text style={styles.title} numberOfLines={2} ellipsizeMode='tail'>主演：{
-                    casts.map((v, i) => <Text key={i}>{v.name + ' '}</Text>)
-                  }
-                </Text>
-                <Text style={styles.title}>上映国家（地区）：{
-                    countries.map((v) => v + ' ')
-                  }
-                </Text>
-                <Text style={styles.title}>故事梗概：{summary}</Text>
-              </View>
-              
+            <View style={styles.content}>
+              <ImageBackground  style={styles.img} source={{uri: images.large}}>
+                <Image source={require('./imgs/play-icon.png')} style={styles.play}/>
+              </ImageBackground >
+              <Text style={styles.title}>评分：{rating.average === 0 ? '暂无评分' : rating.average}</Text>
+              <Text style={styles.title}>类型：{
+                  genres.map((v) => v + ' ')
+                }
+              </Text>
+              <Text style={styles.title}>导演：{
+                  directors.map((v) => v.name + ' ')
+                }
+              </Text>
+              <Text style={styles.title} numberOfLines={2} ellipsizeMode='tail'>主演：{
+                  casts.map((v, i) => <Text key={i}>{v.name + ' '}</Text>)
+                }
+              </Text>
+              <Text style={styles.title}>上映国家（地区）：{
+                  countries.map((v) => v + ' ')
+                }
+              </Text>
+              <Text style={styles.title}>故事梗概：{summary}</Text>
+            </View>
           </View>
-          
            :
           <ActivityIndicator size='large' style={styles.loading}/>
         }
-        
       </ScrollView>
     );
   }
@@ -123,6 +122,13 @@ const styles = StyleSheet.create({
     width: 135,
     height: 188.5,
     marginTop: 10
+  },
+  play: {
+    width: 107,
+    height: 107,
+    position: 'absolute',
+    top: 53.5,
+    left: 53.5
   },
   loading: {
     marginTop: 100
