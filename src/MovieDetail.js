@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, ActivityIndicator, Image, FlatList} from 'react-native';
+import {StyleSheet, Text, View, ActivityIndicator, Image, ScrollView} from 'react-native';
 
 class MovieDetail extends React.Component {
   constructor(props){
@@ -72,12 +72,12 @@ class MovieDetail extends React.Component {
   render() {
     const {data: {rating, genres, directors, casts, countries, summary, images}, ready} = this.state
     return (
-      <View>
+      <ScrollView>
         {
           ready ? 
           <View>
               <View style={styles.content}>
-                <Image style={styles.imgsSize} source={{uri: images.large}}/>
+                <Image style={styles.img} source={{uri: images.large}}/>
                 <Text style={styles.title}>评分：{rating.average === 0 ? '暂无评分' : rating.average}</Text>
                 <Text style={styles.title}>类型：{
                     genres.map((v) => v + ' ')
@@ -104,7 +104,7 @@ class MovieDetail extends React.Component {
           <ActivityIndicator size='large' style={styles.loading}/>
         }
         
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -117,12 +117,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
-    
     lineHeight: 30
   },
-  imgsSize: {
+  img: {
     width: 135,
     height: 188.5,
+    marginTop: 10
   },
   loading: {
     marginTop: 100
