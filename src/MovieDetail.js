@@ -1,12 +1,22 @@
 import React from 'react';
-import {StyleSheet, Text, View, ActivityIndicator, Image, ScrollView, ImageBackground } from 'react-native';
+import {StyleSheet, 
+        Text, 
+        View, 
+        ActivityIndicator, 
+        Image, 
+        ScrollView, 
+        ImageBackground, 
+        TouchableOpacity,
+        Linking
+      } from 'react-native';
 
 class MovieDetail extends React.Component {
   constructor(props){
     super(props)
     this.state = {
       data: {},
-      ready: false
+      ready: false,
+      videoUrl: ''
     }
   }
 
@@ -32,8 +42,9 @@ class MovieDetail extends React.Component {
     }).then((ret) => {
       this.setState({
         data: ret,
-        ready: true
+        ready: true,
       })
+      this.fetchVideo(ret.mobile_url)
     }).catch(err => {
       console.warn(err.message)
       switch (err.name) {
@@ -56,7 +67,7 @@ class MovieDetail extends React.Component {
         const rawResponse = await fetch(`${that.api}/${movieId}`)
         const textResponse = await rawResponse.text()
         const jsonResponse = JSON.parse(textResponse)
-        console.log('json: ', jsonResponse)
+        //console.log('json: ', jsonResponse)
         if (jsonResponse) {
           storage.save({
             key: 'movie',
@@ -69,6 +80,28 @@ class MovieDetail extends React.Component {
     }
   }
 
+  async fetchVideo(vidoe_url) {
+    console.log(vidoe_url)
+    let pageHtml = await fetch(vidoe_url)
+    pageHtml = await pageHtml.text()
+    const reg = /href="([\w|\W]*\.mp4)"/
+    const result = pageHtml.match(reg)
+    if(result && result[1]){
+      this.setState({
+        video: result[1]
+      })
+    }
+  }
+
+  playVideo() {
+    const {video} = this.state
+    if(video){
+      Linking.openURL(video)
+    }else{
+      alert('正在获取视频地址，请稍后再试')
+    }
+  }
+
   render() {
     const {data: {rating, genres, directors, casts, countries, summary, images}, ready} = this.state
     return (
@@ -77,9 +110,11 @@ class MovieDetail extends React.Component {
           ready ? 
           <View>
             <View style={styles.content}>
-              <ImageBackground  style={styles.img} source={{uri: images.large}}>
-                <Image source={require('./imgs/play-icon.png')} style={styles.play}/>
-              </ImageBackground >
+              <TouchableOpacity onPress={() => this.playVideo()}>
+                <ImageBackground  style={styles.img} source={{uri: images.large}}>
+                  <Image source={require('./imgs/play-icon.png')} style={styles.play}/>
+                </ImageBackground >
+              </TouchableOpacity>
               <Text style={styles.title}>评分：{rating.average === 0 ? '暂无评分' : rating.average}</Text>
               <Text style={styles.title}>类型：{
                   genres.map((v) => v + ' ')
@@ -127,8 +162,8 @@ const styles = StyleSheet.create({
     width: 107,
     height: 107,
     position: 'absolute',
-    top: 53.5,
-    left: 53.5
+    top: 40,
+    left: 15
   },
   loading: {
     marginTop: 100
