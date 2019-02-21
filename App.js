@@ -64,6 +64,16 @@ const Navigator = createStackNavigator({
       headerTitleStyle: {
         color: '#eceff1'
       },
+      // headerBackTitleStyle: {
+      //   color: '#eceff1',
+      // },
+      headerTintColor: '#eceff1',
+      headerRight: (
+        <MtIcons name='dots-vertical' size={20}/>
+      ),
+      headerRightContainerStyle: {
+        marginRight: 40,
+      }
     })
   }
 });

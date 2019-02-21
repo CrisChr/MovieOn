@@ -1,5 +1,6 @@
 import React from 'react';
-import {StyleSheet, Text, View, FlatList, ActivityIndicator} from 'react-native';
+import {StyleSheet, Text, View, FlatList} from 'react-native';
+import { ActivityIndicator } from 'react-native-paper'
 
 import MovieItems from './MovieItems'
 
@@ -92,7 +93,7 @@ class MovieList extends React.Component {
               average={item.rating.average}
               onPress={() => navigate('MovieDetail', {id: item.id, title: item.title}) }/>
             }
-          /> : <ActivityIndicator size='large' style={{marginTop: 250}}/>
+          /> : <ActivityIndicator size='medium' animating={true} style={{marginTop: 250}} color='#8e24aa'/>
         } 
       </View>
     );

@@ -2,13 +2,14 @@ import React from 'react';
 import {StyleSheet, 
         Text, 
         View, 
-        ActivityIndicator, 
         Image, 
         ScrollView, 
         ImageBackground, 
         TouchableOpacity,
         Linking
       } from 'react-native';
+
+import { ActivityIndicator } from 'react-native-paper'
 
 class MovieDetail extends React.Component {
   constructor(props){
@@ -136,7 +137,7 @@ class MovieDetail extends React.Component {
             </View>
           </View>
            :
-          <ActivityIndicator size='large' style={styles.loading}/>
+          <ActivityIndicator size='medium' animating={true} style={{marginTop: 250}} color='#8e24aa'/>
         }
       </ScrollView>
     );
