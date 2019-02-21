@@ -78,7 +78,7 @@ class MovieList extends React.Component {
           this.state.loaded ? 
           <FlatList 
           style={styles.row}
-          numColumns={3}
+          numColumns={1}
           onRefresh={this.pullDownFetch}  //下拉执行刷新函数
           refreshing={this.state.refresh} //是否刷新
           onEndReached={this.pullUpFetch} //上拉加载

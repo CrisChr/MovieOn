@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Image, Text, Dimensions, TouchableOpacity } from 'react-native'
+import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 
 const {width, height} = Dimensions.get('window') // 获取当前屏幕的宽、高
 
@@ -43,7 +44,7 @@ class Items extends React.Component {
     */
     return (
       <View style={styles.starsWrapper}>
-        {average !== 0 ? results : <Text style={{marginLeft: 10}}>暂无评分</Text>}
+        {average !== 0 ? results : <Text>暂无评分</Text>}
         {average !== 0 ? <Text style={{marginLeft: 10}}>{parseFloat(average).toFixed(1)}</Text> : <Text style={{marginLeft: 10}}></Text>}
       </View>
     )
@@ -53,11 +54,15 @@ class Items extends React.Component {
   render() {
     let {title, img, stars, average, onPress} = this.props
     return (
-      <TouchableOpacity style={styles.root} onPress={onPress}>
-        <Image style={styles.img} source={{uri: img}}/>
-        <Text style={styles.title} numberOfLines={1}>{title}</Text>
-        {this.renderStars(stars, average)}
-      </TouchableOpacity>
+      <View style={styles.root} >
+        <Card onPress={onPress}>
+          <Card.Title title={title} />
+          <Card.Cover source={{uri: img}}/>
+          <Card.Content>
+            {this.renderStars(stars, average)}
+          </Card.Content>
+        </Card>
+      </View>
     );
   }
 }
@@ -65,12 +70,11 @@ class Items extends React.Component {
 const styles = StyleSheet.create({
   root: {
     marginTop: 15,
-    width: imgWidth,
-    marginRight: 15
   },
   img:{
     width: imgWidth,
     height: imgHeight,
+    marginLeft: 250
   },
   title: {
     fontSize: 16,
@@ -82,11 +86,16 @@ const styles = StyleSheet.create({
     width: 12,
     height: 12
   },
+  intruduction: {
+    flexDirection: 'column',
+    marginTop: 10,
+    marginLeft: 10,
+  },
   starsWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 5
+    marginTop: 10
   },
 })
 

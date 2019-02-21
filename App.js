@@ -36,6 +36,9 @@ const MyTabs = createMaterialTopTabNavigator({
     tabStyle: {
       height: 50
     },
+    style: {
+      backgroundColor: '#8e24aa'
+    },
     showLabel: false
 }},{
   initialRouteName: 'MovieList',
@@ -54,7 +57,13 @@ const Navigator = createStackNavigator({
   MovieDetail: {
     screen: MovieDetail,
     navigationOptions: ({navigation}) => ({
-      title: navigation.state.params.title
+      title: navigation.state.params.title,
+      headerStyle: {
+        backgroundColor: '#8e24aa',
+      },
+      headerTitleStyle: {
+        color: '#eceff1'
+      },
     })
   }
 });
