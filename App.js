@@ -11,6 +11,8 @@ import MovieList from './src/MovieList'
 import MyMovies from './src/MyMovies'
 import MovieDetail from './src/MovieDetail'
 
+import HeaderComponent from './src/component/Header'
+
 const MyTabs = createMaterialTopTabNavigator({
   MovieList: {
     screen: MovieList,
@@ -64,15 +66,13 @@ const Navigator = createStackNavigator({
       headerTitleStyle: {
         color: '#eceff1'
       },
-      // headerBackTitleStyle: {
-      //   color: '#eceff1',
-      // },
+      headerBackTitleStyle: {
+        color: '#eceff1',
+      },
       headerTintColor: '#eceff1',
-      headerRight: (
-        <MtIcons name='dots-vertical' size={20}/>
-      ),
+      headerRight: <HeaderComponent id={navigation.state.params.id}/>,
       headerRightContainerStyle: {
-        marginRight: 40,
+        marginRight: 30,
       }
     })
   }

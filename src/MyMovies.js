@@ -1,20 +1,44 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import { DefaultTheme, Button } from 'react-native-paper';
+import {StyleSheet, ScrollView, View} from 'react-native';
+import { DefaultTheme, Button, List } from 'react-native-paper';
 
-// const theme = {
-//   roundness: 5,
-//   color: {
-//     text: '#64b5f6',
-//   }  
-// }
 class MyMovies extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      expanded: false
+    }
+  }
+
+  _handlePress() {
+    this.state.expanded ? this.setState({expanded: false}) : this.setState({expanded: true})
+  }
+
   render() {
     return (
       <View style={styles.root}>
-        <Button raised mode='text' color='#ba68c8' onPress={() => alert('Pressed')} style={{width: 180, marginTop: 50}}>
-          我的观影记录
-        </Button>
+        <List.Accordion
+          title='我的观影记录'
+          expanded={this.state.expanded}
+          onPress={() => this._handlePress()} style={styles.list}>
+          <ScrollView>
+            <List.Item title='流浪地球' />
+            <List.Item title='新喜剧之王' />
+            <List.Item title='我想吃掉你的心脏' />
+            <List.Item title='流浪地球' />
+            <List.Item title='新喜剧之王' />
+            <List.Item title='我想吃掉你的心脏' />
+            <List.Item title='流浪地球' />
+            <List.Item title='新喜剧之王' />
+            <List.Item title='我想吃掉你的心脏' />
+            <List.Item title='流浪地球' />
+            <List.Item title='新喜剧之王' />
+            <List.Item title='我想吃掉你的心脏' />
+            <List.Item title='流浪地球' />
+            <List.Item title='新喜剧之王' />
+            <List.Item title='我想吃掉你的心脏' />
+          </ScrollView>
+        </List.Accordion>
       </View>
     );
   }
@@ -23,7 +47,11 @@ class MyMovies extends React.Component {
 const styles = StyleSheet.create({
   root: {
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+  },
+  list: {
+    width: 180,
+    marginTop: 20
   }
 })
 

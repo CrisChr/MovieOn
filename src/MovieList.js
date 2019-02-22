@@ -102,7 +102,7 @@ class MovieList extends React.Component {
 
 const styles = StyleSheet.create({
   row: {
-    marginHorizontal: 15
+    marginHorizontal: 2
   },
 });
 
