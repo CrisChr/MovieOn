@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, FlatList} from 'react-native';
 import { ActivityIndicator } from 'react-native-paper'
 
 import MovieItems from './MovieItems'
+import FetchSourceData from './data/fetchMovies'
 
 class MovieList extends React.Component {
   constructor(props) {
@@ -12,62 +13,54 @@ class MovieList extends React.Component {
       refresh: false,
       total: 0,
       loaded: false,
-      pullUpLoad: true
     }
   }
 
-  refresh = false
-
-  api = 'https://api.douban.com/v2/movie/in_theaters'
   start = 0
   count = 12
 
-  fetchData = async(start, count) => {
+  pullDownFetch = async() => {
     if(this.refresh) return;
     this.setState({
       refresh: true
     })
-    this.refresh = true
-    return fetch(`${this.api}?start=${this.start}&count=${this.count}`) //fetch函数返回一个Promise对象
-      .then((response) => response.text())
-      .then((responseText) => {
-        const responseJson = JSON.parse(responseText)
-        this.setState({
-          total: responseJson.total,
-          refresh: false
-        })
-        this.refresh = false
-        return responseJson //无法直接获取，必须再返回一个promise对象
-      }).catch((err) => {
-        console.log(err)
-      })
-  }
-
-  pullDownFetch = async() => {
-    this.start = 0, this.count = 12
-    const movieData = await this.fetchData()
+    const movieData = await FetchSourceData()
     this.setState({
       movies: movieData.subjects,
+      refresh: false,
     })
+    this.start = 0
+    this.count = 12
   }
 
   pullUpFetch = async() => {
     this.start += this.count + 1
     if(this.start < this.state.total) {
-      const moreData = await this.fetchData(this.start, this.count)
+      if(this.refresh) return;
+      this.setState({
+        refresh: true
+      })
+      const moreData = await FetchSourceData(this.start, this.count)
       if(moreData){
         this.setState({
-          movies: this.state.movies.concat(moreData.subjects)
+          movies: this.state.movies.concat(moreData.subjects),
+          refresh: false
         })
       }
     }
   }
 
   async componentDidMount() {
-    const initialData = await this.fetchData()
+    if(this.refresh) return;
+    this.setState({
+      refresh: true
+    })
+    const initialData = await FetchSourceData()
     this.setState({
       movies: initialData.subjects,
-      loaded: true
+      loaded: true,
+      refresh: false,
+      total: initialData.total,
     })
   }
 

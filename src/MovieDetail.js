@@ -10,7 +10,6 @@ import {StyleSheet,
       } from 'react-native';
 
 import { ActivityIndicator } from 'react-native-paper'
-
 class MovieDetail extends React.Component {
   constructor(props){
     super(props)
@@ -20,8 +19,6 @@ class MovieDetail extends React.Component {
       videoUrl: ''
     }
   }
-
-  api = 'https://api.douban.com/v2/movie/subject'
 
   componentDidMount() {
     const {
@@ -51,38 +48,14 @@ class MovieDetail extends React.Component {
       switch (err.name) {
         case 'NotFoundError':
           break;
-
         case 'ExpiredError':
           break;
       }
     })
-
-    const that = this
-    storage.sync = {
-      async movie(params) {
-        const {
-          syncParams: {
-            movieId
-          }
-        } = params
-        const rawResponse = await fetch(`${that.api}/${movieId}`)
-        const textResponse = await rawResponse.text()
-        const jsonResponse = JSON.parse(textResponse)
-        //console.log('json: ', jsonResponse)
-        if (jsonResponse) {
-          storage.save({
-            key: 'movie',
-            id: movieId,
-            data: jsonResponse
-          })
-          return jsonResponse
-        }
-      }
-    }
   }
 
   async fetchVideo(vidoe_url) {
-    console.log(vidoe_url)
+    //console.log(vidoe_url)
     let pageHtml = await fetch(vidoe_url)
     pageHtml = await pageHtml.text()
     const reg = /href="([\w|\W]*\.mp4)"/

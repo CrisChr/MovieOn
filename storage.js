@@ -1,5 +1,6 @@
 import Storage from 'react-native-storage'
 import { AsyncStorage } from 'react-native'
+import FetchMovieDetails from './src/data/fetchMovieDetails'
 
 const storage = new Storage({
   // 最大容量，默认值1000条数据循环存储
@@ -18,7 +19,7 @@ const storage = new Storage({
   // 如果storage中没有相应数据，或数据已过期，
   // 则会调用相应的sync方法，无缝返回最新数据。
   // sync方法的具体说明会在后文提到
-  sync: {}
+  sync: FetchMovieDetails //require('./src/data/fetchMovieDetails')
 });
 
 // 最好在全局范围内创建一个（且只有一个）storage实例，方便直接调用

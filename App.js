@@ -10,7 +10,6 @@ import MtIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MovieList from './src/MovieList'
 import MyMovies from './src/MyMovies'
 import MovieDetail from './src/MovieDetail'
-
 import HeaderComponent from './src/component/Header'
 
 const MyTabs = createMaterialTopTabNavigator({
@@ -42,7 +41,7 @@ const MyTabs = createMaterialTopTabNavigator({
       backgroundColor: '#8e24aa'
     },
     showLabel: false
-}},{
+  },
   initialRouteName: 'MovieList',
   backBehavior: 'none',
   swipeEnabled: true,
