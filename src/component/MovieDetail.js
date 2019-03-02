@@ -86,7 +86,7 @@ class MovieDetail extends React.Component {
             <View style={styles.content}>
               <TouchableOpacity onPress={() => this.playVideo()}>
                 <ImageBackground  style={styles.img} source={{uri: images.large}}>
-                  <Image source={require('./imgs/play-icon.png')} style={styles.play}/>
+                  <Image source={require('../imgs/play-icon.png')} style={styles.play}/>
                 </ImageBackground >
               </TouchableOpacity>
               <Text style={styles.title}>评分：{rating.average === 0 ? '暂无评分' : rating.average}</Text>
