@@ -7,9 +7,9 @@ import {
 
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs'
 import MtIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MovieList from './src/MovieList'
-import MyMovies from './src/MyMovies'
-import MovieDetail from './src/MovieDetail'
+import MovieList from './src/component/MovieList'
+import MyMovies from './src/component/MyMovies'
+import MovieDetail from './src/component/MovieDetail'
 import HeaderComponent from './src/component/Header'
 
 const MyTabs = createMaterialTopTabNavigator({

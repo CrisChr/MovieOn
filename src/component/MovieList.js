@@ -1,9 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import { ActivityIndicator } from 'react-native-paper'
+import { connect } from 'react-redux'
 
 import MovieItems from './MovieItems'
-import FetchSourceData from './data/fetchMovies'
+import FetchSourceData from '../data/fetchMovies'
 
 class MovieList extends React.Component {
   constructor(props) {
@@ -64,6 +65,10 @@ class MovieList extends React.Component {
     })
   }
 
+  mapStateToProps = (state) => {
+    
+  }
+
   render() {
     const {navigate} = this.props.navigation
     return (
@@ -99,4 +104,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MovieList
+export default connnect(mapStateToProps)(MovieList)
